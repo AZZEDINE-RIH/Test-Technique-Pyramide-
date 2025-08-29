@@ -11,7 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Enregistrer les middlewares personnalisés
+        $middleware->alias([
+            'project.owner' => \App\Http\Middleware\CheckProjectOwnership::class,
+            'task.permission' => \App\Http\Middleware\CheckTaskPermission::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
